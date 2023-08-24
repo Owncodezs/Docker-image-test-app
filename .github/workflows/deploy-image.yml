@@ -15,16 +15,13 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Build Docker image
-      run: docker build -t test .
+      run: docker build -t https://ghcr.io/itsmanibharathi/test .
 
     - name: Log in to GitHub Packages
-      run: echo "${{ secrets.DOCKER_PAT }}" | docker login docker.pkg.github.com -u ${{ github.repository_owner }} --password-stdin
-
-    - name: Tag Docker image
-      run: docker tag your-docker-image-name docker.pkg.github.com/${{ github.repository }}/your-docker-image-name:latest
+      run: docker login docker.pkg.github.com -u itsmanibharathi --password {{secrets.GITHUB_TOKEN }}
 
     - name: Push Docker image to GitHub Packages
-      run: docker push docker.pkg.github.com/${{ github.repository }}/your-docker-image-name:latest
+      run: docker push docker.pkg.github.com/itsmanibharathi/test:latest
 
 # name: Create and publish a Docker image
 
