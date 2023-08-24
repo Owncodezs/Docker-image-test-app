@@ -1,2 +1,2 @@
 FROM alpin
-CMD ["testing","command-v1"]
+CMD ["testing","command-v3"]
