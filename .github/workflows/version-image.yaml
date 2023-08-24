@@ -1,0 +1,31 @@
+name: Create Release Branch and Make Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  create_release_branch_and_release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Determine commit hash
+        run: echo "::set-env name=COMMIT_HASH::$(git log -1 --format=%H)"
+
+      - name: Create release branch
+        run: |
+          git checkout -b release-${{ env.COMMIT_HASH }}
+          git push origin release-${{ env.COMMIT_HASH }}
+
+      - name: Create release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git checkout main
+          # Perform your release steps here, e.g., creating tags, updating version, etc.
+          # Use the $COMMIT_HASH to reference the specific commit for the release
+
