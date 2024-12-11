@@ -34,17 +34,21 @@ pipeline {
         }
         stage('Login to GitHub Container Registry') {
             steps {
-                sh '''
-                echo "$GHCR_TOKEN" | docker login ghcr.io -u "$GHCR_USERNAME" --password-stdin
-                '''
+                container('docker') {
+                    sh '''
+                    echo "$GHCR_TOKEN" | docker login ghcr.io -u "$GHCR_USERNAME" --password-stdin
+                    '''
+                }
             }
         }
         stage('Build and Push Docker Image') {
             steps {
-                sh '''
-                docker build . --tag ghcr.io/itsmanibharathi/store:latest
-                docker push ghcr.io/itsmanibharathi/store:latest
-                '''
+                container('docker') {
+                    sh '''
+                    docker build . --tag ghcr.io/itsmanibharathi/store:latest
+                    docker push ghcr.io/itsmanibharathi/store:latest
+                    '''
+                }
             }
         }
     }
