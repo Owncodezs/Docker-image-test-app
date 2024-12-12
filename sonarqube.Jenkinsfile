@@ -59,10 +59,10 @@ pipeline {
         stage('SonarQube Analysis') {
             environment {
                 // Inject SonarQube environment variables configured in Jenkins
-                SONARQUBE_ENV = 'YourSonarQubeInstallationName' // Name from SonarQube installations
+                SONARQUBE_ENV = 'demo-pip_test' // Name from SonarQube installations
             }
             steps {
-                withSonarQubeEnv('YourSonarQubeInstallationName') {
+                withSonarQubeEnv('demo-pip_test') {
                     container('sonar-scanner') {
                         sh '''
                         sonar-scanner \
