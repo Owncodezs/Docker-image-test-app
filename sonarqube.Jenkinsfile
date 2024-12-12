@@ -65,16 +65,11 @@ pipeline {
                 withSonarQubeEnv('demo-pip_test') {
                     container('sonar-scanner') {
                         sh '''
-                        echo "Running SonarQube analysis"
-                        echo "SONAR_HOST_URL: $SONAR_HOST_URL"
-                        echo "SONAR_AUTH_TOKEN: $SONAR_AUTH_TOKEN"
-
-
-                        sonar-scanner \
-                          -Dsonar.projectKey="demo-pip_test" \
-                          -Dsonar.sources=. \
-                          -Dsonar.host.url=$SONAR_HOST_URL \
-                          -Dsonar.login=$SONAR_AUTH_TOKEN
+                            sonar-scanner \ 
+                            -Dsonar.projectKey=demo-pip_test \
+                            -Dsonar.sources=. \
+                            -Dsonar.host.url=http://3.80.11.183:9000 \
+                            -Dsonar.login=sqp_d8bdb84e91c7e19f58746e808cc445772ba33dc0
                         '''
                     }
                 }
