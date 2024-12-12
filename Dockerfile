@@ -5,7 +5,7 @@ FROM python:3.8-slim
 WORKDIR /app
 
 # Create a simple Python script
-RUN echo "print('Hello, World!')" > app.py
+RUN echo "print('Hello, World! demo ')" > app.py
 
 # Define the command to run when the container starts
 CMD ["python", "app.py"]
