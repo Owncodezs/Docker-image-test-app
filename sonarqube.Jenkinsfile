@@ -37,25 +37,25 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Login to GitHub Container Registry') {
-            steps {
-                container('docker') {
-                    sh '''
-                    echo "$GHCR_TOKEN" | docker login ghcr.io -u "$GHCR_USERNAME" --password-stdin
-                    '''
-                }
-            }
-        }
-        stage('Build and Push Docker Image') {
-            steps {
-                container('docker') {
-                    sh '''
-                    docker build . --tag ghcr.io/itsmanibharathi/store:latest
-                    docker push ghcr.io/itsmanibharathi/store:latest
-                    '''
-                }
-            }
-        }
+        // stage('Login to GitHub Container Registry') {
+        //     steps {
+        //         container('docker') {
+        //             sh '''
+        //             echo "$GHCR_TOKEN" | docker login ghcr.io -u "$GHCR_USERNAME" --password-stdin
+        //             '''
+        //         }
+        //     }
+        // }
+        // stage('Build and Push Docker Image') {
+        //     steps {
+        //         container('docker') {
+        //             sh '''
+        //             docker build . --tag ghcr.io/itsmanibharathi/store:latest
+        //             docker push ghcr.io/itsmanibharathi/store:latest
+        //             '''
+        //         }
+        //     }
+        // }
         stage('SonarQube Analysis') {
             environment {
                 // Inject SonarQube environment variables configured in Jenkins
@@ -65,6 +65,11 @@ pipeline {
                 withSonarQubeEnv('demo-pip_test') {
                     container('sonar-scanner') {
                         sh '''
+                        echo "Running SonarQube analysis"
+                        echo "SONAR_HOST_URL: $SONAR_HOST_URL"
+                        echo "SONAR_AUTH_TOKEN: $SONAR_AUTH_TOKEN"
+
+
                         sonar-scanner \
                           -Dsonar.projectKey="sqp_d8bdb84e91c7e19f58746e808cc445772ba33dc0" \
                           -Dsonar.sources=. \
@@ -75,18 +80,18 @@ pipeline {
                 }
             }
         }
-        stage('Scan Docker Image') {
-            steps {
-                container('docker') {
-                    sh '''
-                    # Install Trivy for image scanning
-                    wget -qO- https://github.com/aquasecurity/trivy/releases/latest/download/trivy_$(uname -s | tr '[:upper:]' '[:lower:]')_amd64.tar.gz | tar zxvf - -C /usr/local/bin
-                    # Scan the built Docker image
-                    trivy image ghcr.io/itsmanibharathi/store:latest
-                    '''
-                }
-            }
-        }
+        // stage('Scan Docker Image') {
+        //     steps {
+        //         container('docker') {
+        //             sh '''
+        //             # Install Trivy for image scanning
+        //             wget -qO- https://github.com/aquasecurity/trivy/releases/latest/download/trivy_$(uname -s | tr '[:upper:]' '[:lower:]')_amd64.tar.gz | tar zxvf - -C /usr/local/bin
+        //             # Scan the built Docker image
+        //             trivy image ghcr.io/itsmanibharathi/store:latest
+        //             '''
+        //         }
+        //     }
+        // }
         stage('Quality Gate Check') {
             steps {
                 waitForQualityGate abortPipeline: true
