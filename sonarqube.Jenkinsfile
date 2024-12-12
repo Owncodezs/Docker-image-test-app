@@ -71,7 +71,7 @@ pipeline {
 
 
                         sonar-scanner \
-                          -Dsonar.projectKey="sqp_d8bdb84e91c7e19f58746e808cc445772ba33dc0" \
+                          -Dsonar.projectKey="demo-pip_test" \
                           -Dsonar.sources=. \
                           -Dsonar.host.url=$SONAR_HOST_URL \
                           -Dsonar.login=$SONAR_AUTH_TOKEN
