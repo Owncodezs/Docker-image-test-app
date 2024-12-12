@@ -65,7 +65,7 @@ pipeline {
                 withSonarQubeEnv('demo-pip_test') {
                     container('sonar-scanner') {
                         sh '''
-                            sonar-scanner \ 
+                        sonar-scanner \
                             -Dsonar.projectKey=demo-pip_test \
                             -Dsonar.sources=. \
                             -Dsonar.host.url=http://3.80.11.183:9000 \
