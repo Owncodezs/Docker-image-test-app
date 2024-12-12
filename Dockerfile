@@ -1,11 +1,17 @@
-# Use the official Python image as the base image
-FROM python:3.8-slim
+# Use an official Python runtime as a parent image
+FROM python:3.9-slim
 
-# Set the working directory inside the container
+# Set the working directory in the container
 WORKDIR /app
 
-# Create a simple Python script
-RUN echo "print('Hello, World! demo ')" > app.py
+# Copy the current directory contents into the container at /app
+COPY . /app
 
-# Define the command to run when the container starts
+# Install any needed packages specified in requirements.txt
+RUN pip install --no-cache-dir flask
+
+# Make port 5000 available to the world outside this container
+EXPOSE 5000
+
+# Run app.py when the container launches
 CMD ["python", "app.py"]
