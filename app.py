@@ -10,7 +10,7 @@ def home():
 @app.route("/greet/<name>")
 def greet(name):
     """Route to greet a person by name."""
-    return jsonify(greeting=f"Hello, {name}!")
+    return jsonify(greeting=f"Hello, {name}! for tets")
 
 @app.route("/add", methods=["POST"])
 def add_numbers():
