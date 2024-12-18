@@ -32,5 +32,6 @@ jobs:
       - name: 'Build Inventory Image'
         run: |
           docker buildx create --use
-          docker buildx build --cache-from=type=local,src=/tmp/.buildx-cache --cache-to=type=local,dest=/tmp/.buildx-cache --tag ghcr.io/itsmanibharathi/store:latest .
+          docker buildx build --cache-from=type=local,src=/tmp/.buildx-cache --cache-to=type=local,dest=/tmp/.buildx-cache --tag ghcr.io/itsmanibharathi/store:latest --output=type=docker,dest=image.tar .
+          docker load -i image.tar
           docker push ghcr.io/itsmanibharathi/store:latest
